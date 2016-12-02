@@ -9,7 +9,7 @@ class EventCalendar extends \edofre\fullcalendar\Fullcalendar
 		'left'   => 'prev,next, today',
 		'right'  => 'listYear,month,agendaWeek,agendaDay'
 	];
-	
+
   public function run()
   {
     assets\ModuleAsset::register($this->view);
