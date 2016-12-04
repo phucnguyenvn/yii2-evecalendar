@@ -67,7 +67,7 @@ class EventController extends Controller
         $model = new Event();
         $model->s_date = $date;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('success');
+            return 'success';
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -101,7 +101,7 @@ class EventController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('success');
+            return;
         } else {
             return $this->render('update', [
                 'model' => $model,

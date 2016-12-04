@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="event-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'event-form']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -45,3 +45,37 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php $script = <<< JS
+  $('form#event-form').on('beforeSubmit',function(e){
+    var \$url = window.location.protocol + "//" + window.location.host + "/";
+    var \$form = $(this);
+    $.post(
+        \$form.attr("action"),
+        \$form.serialize()
+    )
+    .done(function(result){
+      //if new model saved
+      if(result == "success")
+      {
+        $('#modal').modal('hide');
+        $.get(\$url+'calendar/event/success',function(data){
+          $.each(data,function(key,value){
+            {
+                $('#calendar').fullCalendar('renderEvent',value,true);
+            }
+          });
+        });
+        console.log(result);
+      }
+      else
+      {
+
+      }
+    }).fail(function(){
+      console.log("server error");
+    });
+    return false;
+  });
+JS;
+
+$this->registerJs($script);
