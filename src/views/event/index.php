@@ -23,8 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'size'=>'modal-md',
         ]);
       Modal::end();
+
      ?>
     <?= EventCalendar::widget([
-            'events' => \yii\helpers\Url::to(['events', 'id' => 'hihi']),
+            'events' => \yii\helpers\Url::to(['events']),
         ]);
     ?>
+
+<?php
+
+//add event button
+$js[] = "jQuery('.fc-day-top').append('<div class=\'btn-add-event\'></div>');";
+$this->registerJs(implode("\n", $js),\yii\web\View::POS_READY);

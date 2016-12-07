@@ -6,6 +6,7 @@ use Yii;
 use phucnguyenvn\yii2evecalendar\models\Event;
 use phucnguyenvn\yii2evecalendar\models\EventSearch;
 use phucnguyenvn\yii2evecalendar\models\DisplayEvents;
+use phucnguyenvn\yii2evecalendar\helpers\CalendarHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -36,13 +37,11 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EventSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        // $model = Event::getEventbyDateRange(date(DATE_W3C, strtotime('2016-11-10')),date(DATE_W3C, strtotime('2016-12-29')));
+        // //$result = CalendarHelper::convertCalendar($model);
+        // var_dump($model); die;
+        
+        return $this->render('index');
     }
 
     /**
@@ -62,12 +61,17 @@ class EventController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($date)
+    public function actionCreate($date=null)
     {
         $model = new Event();
-        $model->s_date = $date;
+        $model->s_date = $date;//date('m/d/Y', strtotime($date));
+        //var_dump($model->s_date); die;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return 'success';
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $result = array();
+            $result['message'] = 'success';
+            $result['data'] = CalendarHelper::convertCalendar($model);
+            return $result;
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -77,18 +81,8 @@ class EventController extends Controller
 
     //update view when create success
     public function actionSuccess($model=null){
-      Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-      return [
-          // minimum
-          new DisplayEvents([
-              'title' => 'hehehehe' . rand(1, 999),
-              'start' => '2016-12-18T14:00:00',
-          ]),
-          new DisplayEvents([
-              'title' => 'hihihihi' . rand(1, 999),
-              'start' => '2016-12-17T14:00:00',
-          ]),
-        ];
+      //var_dump($model); die;
+      return;
     }
     /**
      * Updates an existing Event model.
@@ -138,45 +132,11 @@ class EventController extends Controller
         }
     }
 
-    public function actionEvents($id, $start, $end)
+    public function actionEvents($start, $end)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        return [
-            // minimum
-            new DisplayEvents([
-                'title' => 'Appointment #' . rand(1, 999),
-                'start' => '2016-12-18T14:00:00',
-            ]),
-            // Everything editable
-            new DisplayEvents([
-                'id'               => uniqid(),
-                'title'            => 'Appointment #' . rand(1, 999),
-                'start'            => '2016-12-17T12:30:00',
-                'end'              => '2016-12-17T13:30:00',
-            ]),
-            // No overlap
-            new \edofre\fullcalendar\models\Event([
-                'id'               => uniqid(),
-                'title'            => 'Appointment #' . rand(1, 999),
-                'start'            => '2016-12-17T15:30:00',
-                'end'              => '2016-12-17T19:30:00',
-                'overlap'          => false, // Overlap is default true
-            ]),
-            // Only duration editable
-            new DisplayEvents([
-                'id'               => uniqid(),
-                'title'            => 'Appointment #' . rand(1, 999),
-                'start'            => '2016-12-16T11:00:00',
-                'end'              => '2016-12-16T11:30:00',
-            ]),
-            // Only start editable
-            new DisplayEvents([
-                'id'               => uniqid(),
-                'title'            => 'Appointment #' . rand(1, 999),
-                'start'            => '2016-12-15T14:00:00',
-                'end'              => '2016-12-15T15:30:00',
-            ]),
-        ];
+        $model = Event::getEventbyDateRange($start,$end);
+        $events = CalendarHelper::convertCalendar($model);
+        return $events;
     }
 }

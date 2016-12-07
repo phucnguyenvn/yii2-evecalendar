@@ -18,8 +18,8 @@ class EventSearch extends Event
     public function rules()
     {
         return [
-            [['id', 'cat_id', 'user_id', 'status'], 'integer'],
-            [['title', 'description', 'lbnref', 'notice_mail', 's_date', 'e_date', 's_time', 'e_time', 'last_run', 'recurrence'], 'safe'],
+            [['id', 'cat_id', 'user_id', 'status','entity_id'], 'integer'],
+            [['title', 'description', 'notice_mail', 's_date', 'e_date', 's_time', 'e_time', 'last_run', 'recurrence'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class EventSearch extends Event
             'id' => $this->id,
             'cat_id' => $this->cat_id,
             'user_id' => $this->user_id,
+            'entity_id' => $this->entity_id,
             's_date' => $this->s_date,
             'e_date' => $this->e_date,
             's_time' => $this->s_time,
@@ -72,7 +73,6 @@ class EventSearch extends Event
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'lbnref', $this->lbnref])
             ->andFilterWhere(['like', 'notice_mail', $this->notice_mail])
             ->andFilterWhere(['like', 'recurrence', $this->recurrence]);
 

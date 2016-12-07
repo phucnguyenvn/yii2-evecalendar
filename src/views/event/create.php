@@ -13,28 +13,48 @@ use yii\widgets\ActiveForm;
   <div class="event-form">
 
       <?php $form = ActiveForm::begin(['id'=>'event-form']); ?>
-
       <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
       <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-      <?= $form->field($model, 'lbnref')->textInput(['maxlength' => true]) ?>
 
       <?= $form->field($model, 'cat_id')->textInput() ?>
 
       <?= $form->field($model, 'user_id')->textInput() ?>
 
+      <?= $form->field($model, 'entity_id')->textInput() ?>
+
       <?= $form->field($model, 'notice_mail')->textInput(['maxlength' => true]) ?>
 
-      <?= $form->field($model, 's_date')->textInput() ?>
+      <div class="col-sm-6">
+      <?= $form->field($model, 's_date')->widget(\yii\jui\DatePicker::classname(), [
+                'dateFormat' => 'yyyy-MM-dd',
+                'options' => [
+                      'class'=>'form-control',
+                   ]
+            ])?>
+      </div>
+      <div class="col-sm-6">
+        <?= $form->field($model, 's_time')->widget(\kartik\time\TimePicker::classname(), [
 
-      <?= $form->field($model, 'e_date')->textInput() ?>
+        ]) ?>
+      </div>
 
-      <?= $form->field($model, 's_time')->textInput() ?>
+      <div class="col-sm-6">
+        <?= $form->field($model, 'e_date')->widget(\yii\jui\DatePicker::classname(), [
+                  'dateFormat' => 'yyyy-MM-dd',
+                  'options' => [
+                        'class'=>'form-control',
+                     ]
+              ])?>
+      </div>
 
-      <?= $form->field($model, 'e_time')->textInput() ?>
-
-      <?= $form->field($model, 'last_run')->textInput() ?>
+      <div class="col-sm-6">
+        <?= $form->field($model, 'e_time')->widget(\kartik\time\TimePicker::classname(), [
+            'pluginOptions' => [
+              'defaultTime' => false
+            ]
+        ]) ?>
+      </div>
 
       <?= $form->field($model, 'status')->textInput() ?>
 
@@ -61,21 +81,21 @@ use yii\widgets\ActiveForm;
     )
     .done(function(result){
       //if new model saved
-      if(result == "success")
+      if(result.message == "success")
       {
         $('#modal').modal('hide');
-        $.get(\$url+'calendar/event/success',function(data){
-          $.each(data,function(key,value){
-            {
-                $('#calendar').fullCalendar('renderEvent',value,true);
-            }
-          });
-        });
+        //update current view after saved event
         console.log(result);
+        $.each(result.data,function(key,value){
+          {
+              $('#calendar').fullCalendar('renderEvent',value,true);
+          }
+        });
+
       }
       else
       {
-
+        return false;
       }
     }).fail(function(){
       console.log("server error");

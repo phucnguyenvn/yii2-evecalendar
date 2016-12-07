@@ -7,13 +7,12 @@ class ModuleAsset extends AssetBundle
 {
     public $sourcePath = '@vendor/phucnguyenvn/yii2-evecalendar/src/assets';
     public $css = [
-
+        'css/main.css'
     ];
     public $js = [
         'js/main.js'
     ];
     public $depends = [
-      'yii\web\YiiAsset',
-      'yii\bootstrap\BootstrapAsset',
+      'edofre\fullcalendar\CoreAsset',
     ];
 }
