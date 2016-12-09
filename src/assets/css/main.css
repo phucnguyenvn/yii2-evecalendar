@@ -10,3 +10,8 @@
 .btn-add-event:hover{
     box-shadow: 2px 2px 2px #000000;
 }
+
+#rrule-readable{
+  color:green;
+  font-weight: bold;
+}

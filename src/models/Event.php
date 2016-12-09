@@ -76,7 +76,7 @@ class Event extends \yii\db\ActiveRecord
       {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $constraint  = new \Recurr\Transformer\Constraint\BetweenConstraint(new \DateTime($start),new \DateTime($end),Yii::$app->timeZone);
-        $rule        = new \Recurr\Rule($model_item->recurrence,$startDate=null, $endDate=null, Yii::$app->timeZone);
+        $rule        = new \Recurr\Rule($model_item->recurrence,new \DateTime($model_item->Start),new \DateTime($model_item->End), Yii::$app->timeZone);
         $recurrent_collection = $transformer->transform($rule, $constraint);
 
         //clone original event base on recurr logic
@@ -90,6 +90,7 @@ class Event extends \yii\db\ActiveRecord
         }
       }
       $result = ArrayHelper::merge($non_recurrent,$recurrent);
+      //var_dump($recurrent); die;
       return $result;
     }
 
@@ -134,8 +135,7 @@ class Event extends \yii\db\ActiveRecord
     //return end datetime ISO8601 string combine by end date and end time
     public function getEnd()
     {
-      //check if this event is allDay, return null
-      if(is_null($this->e_date) && is_null($this->e_time)) return null;
+      if(is_null($this->e_date)) return $this->s_date; //event has empty e_date is a same date event
       $enddate = date(DATE_ISO8601, strtotime($this->e_date." ".$this->e_time));
       return $enddate;
     }

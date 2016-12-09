@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'last_run')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
-
+    
     <?= $form->field($model, 'recurrence')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

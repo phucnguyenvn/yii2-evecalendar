@@ -40,7 +40,7 @@ class EventController extends Controller
         // $model = Event::getEventbyDateRange(date(DATE_W3C, strtotime('2016-11-10')),date(DATE_W3C, strtotime('2016-12-29')));
         // //$result = CalendarHelper::convertCalendar($model);
         // var_dump($model); die;
-        
+
         return $this->render('index');
     }
 
@@ -70,7 +70,13 @@ class EventController extends Controller
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $result = array();
             $result['message'] = 'success';
-            $result['data'] = CalendarHelper::convertCalendar($model);
+            if($model->recurrence != '')
+            {
+              $result['data'] = CalendarHelper::convertCalendar($model);
+            }
+            else {
+              $result['data'] = CalendarHelper::convertCalendar($model);
+            }
             return $result;
         } else {
             return $this->renderAjax('create', [

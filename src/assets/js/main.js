@@ -12,9 +12,7 @@ $(document).ready(function() {
     $(document).on('click','.modal-cancel',function(){
         $('#modal').modal('hide');
     });
-    //add event button
-    $(document).on('click','button',function(){
-      $('.btn-add-event').remove();
-      $('.fc-day-top').append("<div class='btn-add-event'></div>");
-    });
+    
+
+
 });

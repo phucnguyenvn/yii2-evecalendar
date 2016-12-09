@@ -17,7 +17,7 @@ class CalendarHelper extends \yii\helpers\BaseArrayHelper
           $event = new DisplayEvents([
                "id" =>$model->id,
                "title"=>$model->title,
-               "allDay"=>is_null($model->end),
+               "allDay"=>(is_null($model->s_time) || is_null($model->e_time)),
                "start"=>$model->start,
                "end"=>$model->end,
               //  "url"=>null,
