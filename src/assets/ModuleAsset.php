@@ -14,5 +14,7 @@ class ModuleAsset extends AssetBundle
     ];
     public $depends = [
       'edofre\fullcalendar\CoreAsset',
+      'yii\web\YiiAsset',
+      'yii\bootstrap\BootstrapAsset',
     ];
 }

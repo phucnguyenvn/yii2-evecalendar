@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\web\JsExpression;
 use phucnguyenvn\yii2evecalendar\EventCalendar;
-
+use phucnguyenvn\yii2evecalendar\assets\ModuleAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+ModuleAsset::register($this);
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $js[] = "jQuery('.fc-day-top').append('<div class=\'btn-add-event\'></div>');";
 $this->registerJs(implode("\n", $js),\yii\web\View::POS_READY);
 
-  $script = <<< JS
+$script = <<< JS
   //action add event button
   function buttonAddEvent()
   {

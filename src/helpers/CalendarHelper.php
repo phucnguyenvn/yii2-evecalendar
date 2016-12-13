@@ -30,8 +30,8 @@ class CalendarHelper extends \yii\helpers\BaseArrayHelper
               //  "constraint"=>null,
               //  "source"=>null,
               //  "color"=>'red',
-                "backgroundColor"=>($model->id % 2 == 0)?"grey":null,
-                "borderColor"=>($model->id % 2 == 0)?"black":null,
+                "backgroundColor"=>empty($model->recurrence)?null:'grey',
+                "borderColor"=>(is_null($model->s_time) || is_null($model->e_time))?"black":null,
               //  "textColor"=>null
           ]);
           array_push($events,$event);

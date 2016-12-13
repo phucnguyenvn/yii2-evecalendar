@@ -15,12 +15,15 @@ class EventCalendar extends \edofre\fullcalendar\Fullcalendar
 
   public $navLinks  = true;
 
+  public $nowIndicator = true;
+
   public $views = [
         'agenda' => ['eventLimit' => 5],// adjust to 5 only for agendaWeek/agendaDay
     ];
 
   public function run()
   {
+    $this->clientOptions['nowIndicator'] = $this->nowIndicator;
     $this->clientOptions['navLinks'] = $this->navLinks;
     $this->clientOptions['views'] = $this->views;
     $this->clientOptions['eventLimit'] = $this->eventLimit;

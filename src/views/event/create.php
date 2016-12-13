@@ -66,14 +66,13 @@ use yii\widgets\ActiveForm;
       </div>
       <?= $form->field($model, 'status')->textInput() ?>
 
-      <?= $this->render('_recurrent', [
-
-      ]) ?>
+      <?= $this->render('_recurrent') ?>
 
       <?= $form->field($model, 'recurrence')->textInput(['maxlength' => true]) ?>
 
       <div class="form-group">
           <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
+          <?= Html::button('Cancel', ['class' => 'btn btn-default modal-cancel']) ?>
       </div>
 
       <?php ActiveForm::end(); ?>
@@ -117,6 +116,11 @@ use yii\widgets\ActiveForm;
     }
   });
 
+  //cancel button
+  $(".modal-cancel").click(function(){
+      $('#modal').modal('hide');
+  });
+
   $('form#event-form').on('beforeSubmit',function(e){
     var \$url = window.location.protocol + "//" + window.location.host + "/";
     var \$form = $(this);
@@ -125,6 +129,7 @@ use yii\widgets\ActiveForm;
         \$form.serialize()
     )
     .done(function(result){
+      console.log(result);
       //if new model saved
       if(result.message == "success")
       {
@@ -133,14 +138,14 @@ use yii\widgets\ActiveForm;
         console.log(result);
         $.each(result.data,function(key,value){
           {
-              $('#calendar').fullCalendar('renderEvent',value,true);
+              $('#calendar').fullCalendar('renderEvent',value,false);
           }
         });
-
       }
       else
       {
         return false;
+        console.log(result);
       }
     }).fail(function(){
       console.log("server error");

@@ -32,13 +32,13 @@ FormAssets::register($this);
         <div id="weekday-select" class="btn-toolbar weeks-choice" role="toolbar" style="display:none;">
             <h4>Which day(s) of the week does this repeat on:</h4>
             <div class="btn-group">
-                <button class="btn btn-default" id="SU">Sun</button>
-                <button class="btn btn-default" id="MO">Mon</button>
-                <button class="btn btn-default" id="TU">Tue</button>
-                <button class="btn btn-default" id="WE">Wed</button>
-                <button class="btn btn-default" id="TH">Thu</button>
-                <button class="btn btn-default" id="FR">Fri</button>
-                <button class="btn btn-default" id="SA">Sat</button>
+                <button class="btn btn-default btn-recurr" id="SU">Sun</button>
+                <button class="btn btn-default btn-recurr" id="MO">Mon</button>
+                <button class="btn btn-default btn-recurr" id="TU">Tue</button>
+                <button class="btn btn-default btn-recurr" id="WE">Wed</button>
+                <button class="btn btn-default btn-recurr" id="TH">Thu</button>
+                <button class="btn btn-default btn-recurr" id="FR">Fri</button>
+                <button class="btn btn-default btn-recurr" id="SA">Sat</button>
             </div>
         </div>
 
@@ -103,20 +103,20 @@ FormAssets::register($this);
             <p>
                 <input type="radio" name="yearly-options" id="yearly-multiple-months" /> Multiple Months</p>
             <div style="display:block;float:none;" class="btn-group yearly-multiple-months">
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="1" disabled="disabled">Jan</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="2" disabled="disabled">Feb</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="3" disabled="disabled">Mar</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="4" disabled="disabled">Apr</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="5" disabled="disabled">May</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="6" disabled="disabled">Jun</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="1" disabled="disabled">Jan</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="2" disabled="disabled">Feb</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="3" disabled="disabled">Mar</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="4" disabled="disabled">Apr</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="5" disabled="disabled">May</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="6" disabled="disabled">Jun</button>
             </div>
             <div style="display:block;float:none;" class="btn-group yearly-multiple-months">
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="7" disabled="disabled">Jul</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="8" disabled="disabled">Aug</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="9" disabled="disabled">Sep</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="10" disabled="disabled">Oct</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="11" disabled="disabled">Nov</button>
-                <button class="btn btn-default" style="width:16.66666666666667%" data-month-num="12" disabled="disabled">Dec</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="7" disabled="disabled">Jul</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="8" disabled="disabled">Aug</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="9" disabled="disabled">Sep</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="10" disabled="disabled">Oct</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="11" disabled="disabled">Nov</button>
+                <button class="btn btn-default btn-recurr" style="width:16.66666666666667%" data-month-num="12" disabled="disabled">Dec</button>
             </div>
 
 
@@ -166,44 +166,44 @@ FormAssets::register($this);
 
             <h4>Which day(s) of the month does this repeat on</h4>
             <div class="btn-group" style="display:block;float:none;">
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="1">1</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="2">2</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="3">3</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="4">4</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="5">5</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="6">6</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="7">7</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="1">1</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="2">2</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="3">3</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="4">4</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="5">5</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="6">6</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="7">7</button>
             </div>
             <div class="btn-group" style="display:block;float:none;">
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="8">8</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="9">9</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="10">10</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="11">11</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="12">12</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="13">13</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="14">14</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="8">8</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="9">9</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="10">10</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="11">11</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="12">12</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="13">13</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="14">14</button>
             </div>
             <div class="btn-group" style="display:block;float:none;">
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="15">15</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="16">16</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="17">17</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="18">18</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="19">19</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="20">20</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="21">21</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="15">15</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="16">16</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="17">17</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="18">18</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="19">19</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="20">20</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="21">21</button>
             </div>
             <div class="btn-group" style="display:block;float:none;">
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="22">22</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="23">23</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="24">24</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="25">25</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="26">26</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="27">27</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="28">28</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="22">22</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="23">23</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="24">24</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="25">25</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="26">26</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="27">27</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="28">28</button>
             </div>
             <div class="btn-group" style="display:block;float:none;">
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="29">29</button>
-                <button class="btn btn-default" style="width:14.28571428571429%;" data-day-num="30">30</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="29">29</button>
+                <button class="btn btn-default btn-recurr" style="width:14.28571428571429%;" data-day-num="30">30</button>
             </div>
 
             <!-- BYDAY -->
@@ -234,8 +234,12 @@ FormAssets::register($this);
         <div id="until-rules" style="display:none;">
             <p>Until</p>
             <p>
+                <label for="forever-select">
+                <input type="radio" name="end-select" value="forever" id="forever-select" checked="checked" /> Forever
+            </p>
+            <p>
                 <label for="count-select">
-                    <input type="radio" name="end-select" value="count" id="count-select" checked="checked" /> How many times does this transaction occur?
+                    <input type="radio" name="end-select" value="count" id="count-select" /> How many times does this transaction occur?
 
                     <input autocomplete="off" type="number" name="count" min="1" max="50" value="1" step="1" /> Time(s)</label>
             </p>
@@ -247,7 +251,6 @@ FormAssets::register($this);
                 </label>
             </p>
         </div>
-        <input type="button" id="hihihi" name="submit" value="submit" />
     </div>
 <div class="show-dates">
 </div>

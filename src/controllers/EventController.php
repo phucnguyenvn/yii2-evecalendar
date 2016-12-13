@@ -61,19 +61,21 @@ class EventController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($date=null)
+    public function actionCreate($date=null,$dstart=null,$dend=null)
     {
         $model = new Event();
-        $model->s_date = $date;//date('m/d/Y', strtotime($date));
-        //var_dump($model->s_date); die;
+        $model->s_date = $date; //date('m/d/Y', strtotime($date));
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $result = array();
             $result['message'] = 'success';
+            //process for recurring events
             if($model->recurrence != '')
             {
-              $result['data'] = CalendarHelper::convertCalendar($model);
+              $models = Event::getRecurringEventbyDateRange($dstart,$dend,$model->id);
+              $result['data'] = CalendarHelper::convertCalendar($models);
             }
+            //process for non-recurring events
             else {
               $result['data'] = CalendarHelper::convertCalendar($model);
             }

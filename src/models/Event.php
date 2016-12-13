@@ -48,7 +48,7 @@ class Event extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['cat_id', 'user_id', 'status','entity_id'], 'integer'],
             [['s_time', 'e_time'], 'safe'],
-            [['s_date', 'e_date'], 'date'],
+            [['s_date', 'e_date'], 'safe'],
             [['title', 'notice_mail', 'recurrence'], 'string', 'max' => 255],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => CalCategory::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];
@@ -66,11 +66,20 @@ class Event extends \yii\db\ActiveRecord
       ->andWhere(['or',['<=','e_date', $end],['is','e_date', null]])
       ->all();
 
-      //recurring events
-      $recurrent_model = Event::find()
-      ->where(['!=','recurrence', ''])
-      ->all();
+      //recurring event
+      $recurrent = self::getRecurringEventbyDateRange($start,$end);
 
+      $result = ArrayHelper::merge($non_recurrent,$recurrent);
+      //var_dump($recurrent); die;
+      return $result;
+    }
+
+    //Return array of recurring event between specific start and end time input
+    public static function getRecurringEventbyDateRange($start,$end,$id=null)
+    {
+      $recurrent_model = is_null($id) ? Event::find()
+      ->where(['!=','recurrence', ''])
+      ->all() : Event::find()->where(['!=','recurrence', ''])->andWhere(['=','id', $id])->all();
       $recurrent = array();
       foreach($recurrent_model as $model_item)
       {
@@ -89,9 +98,7 @@ class Event extends \yii\db\ActiveRecord
           array_push($recurrent,$recurring_item);
         }
       }
-      $result = ArrayHelper::merge($non_recurrent,$recurrent);
-      //var_dump($recurrent); die;
-      return $result;
+      return $recurrent;
     }
 
     /**
