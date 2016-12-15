@@ -18,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
       Modal::begin([
-        'header'=>'<h4>Create event</h4>',
         'id'=>'modal',
         'size'=>'modal-md',
         ]);
@@ -32,11 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-//add event button
-$js[] = "jQuery('.fc-day-top').append('<div class=\'btn-add-event\'></div>');";
-$this->registerJs(implode("\n", $js),\yii\web\View::POS_READY);
-
 $script = <<< JS
+  var \$url = window.location.protocol + "//" + window.location.host + "/";
   //action add event button
   function buttonAddEvent()
   {
@@ -45,6 +41,23 @@ $script = <<< JS
   }
   $('button').click(function(){
     buttonAddEvent();
+  });
+
+  //handle event click
+  $('#calendar').fullCalendar('option',{
+    //click to update current event
+    eventClick: function(calEvent, jsEvent, view){
+      $.get(\$url+'calendar/event/update',{id:calEvent.id},function(\$data){
+        $('#modal').modal('show')
+        .find('.modal-body')
+        .html(\$data);
+      });
+    },
+    //add event button
+    eventAfterAllRender: function( view ){
+      buttonAddEvent();
+    },
+
   });
 JS;
 

@@ -13,10 +13,13 @@ class EventCalendar extends \edofre\fullcalendar\Fullcalendar
   //allow event limit display
   public $eventLimit = true;
 
+  //allow click to date number
   public $navLinks  = true;
 
+  //allow indicator timeline
   public $nowIndicator = true;
 
+  //limit view to 5 event
   public $views = [
         'agenda' => ['eventLimit' => 5],// adjust to 5 only for agendaWeek/agendaDay
     ];

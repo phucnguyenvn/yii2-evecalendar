@@ -93,6 +93,7 @@ class Event extends \yii\db\ActiveRecord
         {
           $recurring_item = new Event;//clone original event
           $recurring_item->attributes = $model_item->attributes;
+          $recurring_item->id = $model_item->id;
           $recurring_item->s_date = date_format($item->getStart(),"Y-m-d"); //set new start date
           $recurring_item->e_date = date_format($item->getEnd(),"Y-m-d"); //set new end date
           array_push($recurrent,$recurring_item);
@@ -142,7 +143,7 @@ class Event extends \yii\db\ActiveRecord
     //return end datetime ISO8601 string combine by end date and end time
     public function getEnd()
     {
-      if(is_null($this->e_date)) return $this->s_date; //event has empty e_date is a same date event
+      if(is_null($this->e_date)||$this->e_date=='') return $this->s_date; //event has empty e_date is a same date event
       $enddate = date(DATE_ISO8601, strtotime($this->e_date." ".$this->e_time));
       return $enddate;
     }

@@ -105,7 +105,7 @@ class EventController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return;
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }
