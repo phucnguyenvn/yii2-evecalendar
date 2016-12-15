@@ -38,6 +38,7 @@ Usage
 
 ## Configuring to manage Calendar and Event in web interface
 
+### Register module
 Configure **config/web.php** as follows
 
 ```php
@@ -48,6 +49,17 @@ Configure **config/web.php** as follows
       ],
             ................
   ],
+```
+
+### Configure timeZone
+Configure **config/web.php** as follows
+
+```php
+    $config = [
+      'timezone' => 'Asia/Ho_Chi_Minh',
+      ...
+      ...
+    ]
 ```
 
 * Pretty Url's /calendar
