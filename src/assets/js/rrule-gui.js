@@ -26,6 +26,8 @@ SOFTWARE.
 
 
 */
+
+
 function readRule(rrule) {
 
     rrule = typeof rrule !== 'undefined' ? rrule : '';
@@ -82,7 +84,7 @@ function readRule(rrule) {
                 }
             }).datepicker('setDate', 'today');
 
-            if (recur.UNTIL) {
+            if (recur.UNTIL && typeof recur.COUNT == 'undefined') {
                 // Setup end date picker
                 endYear = recur.UNTIL.substring(0, 4);
                 endMonth = recur.UNTIL.substring(4, 6);
@@ -92,8 +94,24 @@ function readRule(rrule) {
                 $('#end-date-hidden').val(endYear + endMonth + endDay + 'T040000z');
 
                 // Set ENDDATE radio to yes
-                $('input[name="end-select"]').prop('checked', true);
+                $('input[name="end-select"][value="until"]').prop('checked', true);
             }
+            else if(recur.COUNT && typeof recur.UNTIL == 'undefined'){
+              // Set Count to curent count
+              $('input[name="count"]').val(recur.COUNT);
+
+              // set ENDDATE radio to COUNT
+              $('input[name="end-select"][value="count"]').prop('checked', true);
+            }
+            else{
+              // set ENDDATE radio to FOREVER
+              $('input[name="end-select"][value="forever"]').prop('checked', true);
+            }
+
+
+            //Set readable text
+            var result_readable = rruleTransform($('input#event-recurrence').val());
+            $('#rrule-readable').html("repeat " + result_readable);
 
             // Set Recurring event radio to yes
             $('input[name="event-recurring"]').prop('checked', true);
@@ -276,7 +294,9 @@ function readRule(rrule) {
     return false;
 }
 
-readRule = false;
+//readRule = false;
+
+
 
 function resetOptions() {
 
@@ -354,7 +374,8 @@ function rruleTransform(value) {
 
 $(document).ready(function() {
 
-    if (readRule == false) {
+    if ($('input#event-recurrence').val()=='') {
+
         resetOptions();
 
         // Setup the end-date picker
@@ -378,6 +399,8 @@ $(document).ready(function() {
             }
         }).datepicker('setDate', 'today');
         $('#end-date-hidden').val(MyDateString + 'T040000z');
+
+        noRepeat();
     }
 
     // Setup buttons Don't allow any buttons to submit the form
@@ -385,23 +408,34 @@ $(document).ready(function() {
         e.preventDefault;
         return false;
     });
-    noRepeat();
+
+
 });
 
 // Recurring Event Calculator: Show/Hide.  Grab all the radio buttons to see which one.
 $(document).on('change','input[name="event-recurring"]',function() {
 
+
     // Resets all the recurring options
-    resetOptions();
+    // resetOptions();
 
     // enable the input next to the selected radio button
     if ($(this).val() == "yes") {
         $('#recurring-rules').slideDown();
+        //restore RRULE
+        if(typeof($rrule_bkk) == "undefined")
+        {
+          resetOptions();
+        }
+        else $('input#event-recurrence').val($rrule_bkk);
+
         eventChange();
         // Show Until Rules
         $('#until-rules').show();
 
     } else {
+        //backup current RRULE
+        $rrule_bkk = $('input#event-recurrence').val();
         //disable the inputs not selected.
         $('#recurring-rules').hide();
         noRepeat();

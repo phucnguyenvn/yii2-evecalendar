@@ -62,6 +62,4 @@ Configure **config/web.php** as follows
     ]
 ```
 
-* Pretty Url's /calendar
-
-* No pretty Url's index.php?r=calendar
+* Pretty Url's /calendar (only work with pretty URL)
