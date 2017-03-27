@@ -24,7 +24,7 @@ FormAssets::register($this);
             </select>
         </p>
         <p>Every
-            <input type="text" name="interval" value="1" size="2" /> <span class="freq-selection">day(s)</span>
+            <input type="number" name="interval" value="1" size="1" /> <span class="freq-selection">day(s)</span>
         </p>
 
 

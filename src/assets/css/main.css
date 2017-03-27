@@ -15,3 +15,12 @@
   color:green;
   font-weight: bold;
 }
+
+.fc-content{
+  transition: all 200ms ease-out;
+  cursor: pointer;
+}
+
+.fc-content:hover{
+  box-shadow: 0 0 6px rgba(35, 173, 255, 1);
+}

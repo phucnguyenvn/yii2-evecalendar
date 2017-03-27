@@ -1,33 +1,5 @@
-/*
 
-RRULE GENERATOR FORM aka RRULE GUI
-
-MIT License
-
-Copyright (c) 2016 Jordan Roberts
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-*/
-
-
+//Read rule from the recurring event
 function readRule(rrule) {
 
     rrule = typeof rrule !== 'undefined' ? rrule : '';
@@ -45,7 +17,7 @@ function readRule(rrule) {
         console.log(recur);
 
         // See if the recurring rule has enough valid parts
-        if (recur.FREQ && (recur.COUNT || recur.UNTIL)) {
+        if (recur.FREQ && (recur.COUNT || recur.UNTIL || recur.INTERVAL)) {
             recurringRule = {
                 freq: recur.FREQ,
                 interval: recur.INTERVAL,
@@ -60,9 +32,22 @@ function readRule(rrule) {
             // Set either COUNT or UNTIL
             if (typeof recur.COUNT == 'undefined' && recur.UNTIL) {
                 recurringRule.until = recur.UNTIL;
+                //set enable for until input
+                $('input[name="until"][id="end-date"]').prop('disabled', false);
+                //set disable for count input
+                $('input[name="count"]').prop('disabled', true);
 
             } else if (typeof recur.UNTIL == 'undefined' && recur.COUNT) {
                 recurringRule.count = recur.COUNT;
+                //set disabled for until input
+                $('input[name="until"][id="end-date"]').prop('disabled', true);
+                //set enable for count input
+                $('input[name="count"]').prop('disabled', false);
+            } else { //forever detected
+                //set disabled for until input
+                $('input[name="until"][id="end-date"]').prop('disabled', true);
+                //set disabled for count input
+                $('input[name="count"]').prop('disabled', true);
             }
 
             // Set INTERVAL
@@ -81,6 +66,7 @@ function readRule(rrule) {
                     recurringRule.count = '';
                     // Set until variable
                     recurringRule.until = untilString + 'T040000z';
+                    eventChange();
                 }
             }).datepicker('setDate', 'today');
 
@@ -114,7 +100,7 @@ function readRule(rrule) {
             $('#rrule-readable').html("repeat " + result_readable);
 
             // Set Recurring event radio to yes
-            $('input[name="event-recurring"]').prop('checked', true);
+            $('input[name="event-recurring"][value="yes"]').prop('checked', true);
 
             // Show Recurring rules
             $('#recurring-rules').slideDown();
@@ -244,7 +230,7 @@ function readRule(rrule) {
                     }
 
                     // Multiple Month Selection
-                    if (typeof recur.BYMONTH !== 'undefined' && typeof recur.BYMONTHDAY == 'undefined') {
+                    if (typeof recur.BYMONTH !== 'undefined' && typeof recur.BYMONTHDAY == 'undefined' && typeof recur.BYSETPOS == 'undefined') {
                         // Disable yearly select boxes
                         $('select[name^=yearly-').attr('disabled', 'disabled');
                         // Set Radio Button
@@ -268,6 +254,7 @@ function readRule(rrule) {
 
                     // Precise Yearly Selection
                     if (typeof recur.BYMONTH !== 'undefined' && typeof recur.BYDAY !== 'undefined' && typeof recur.BYSETPOS !== 'undefined') {
+
                         // Disable yearly select boxes
                         $('select[name^=yearly-').attr('disabled', 'disabled');
 
@@ -280,6 +267,8 @@ function readRule(rrule) {
                         // Set select values
                         $('select[name="yearly-byday"]').val(recur.BYDAY);
                         $('select[name="yearly-bysetpos"]').val(recur.BYSETPOS);
+                        $('select[name="yearly-bymonth-with-bysetpos-byday"]').val(recur.BYMONTH);
+
 
                         recurringRule.bymonth = recur.BYMONTH;
                         recurringRule.byday = recur.BYDAY;
@@ -374,30 +363,13 @@ function rruleTransform(value) {
 
 $(document).ready(function() {
 
-    if ($('input#event-recurrence').val()=='') {
+    if ($('input#event-recurrence').val()==='') {
 
         resetOptions();
 
         // Setup the end-date picker
-        $(document).find('#end-date').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'yy-mm-dd',
-            onSelect: function(value) {
-                //dateSelected = Date.parseExact(value, "yyyy-MM-dd");
-                dateSelected = new Date(value.replace(/-/g, "/") + ' 00:00:00'); // REGEX used to please SAFARI browser!
-                untilString = dateSelected.getFullYear() + ('0' + (dateSelected.getMonth() + 1)).slice(-2) + ('0' + dateSelected.getDate()).slice(-2);
-                $('#end-date-hidden').val(untilString + 'T040000z');
-                // Remove the count variable
-                recurringRule.count = '';
-                // Set until variable
-                recurringRule.until = untilString + 'T040000z';
+        untilSelect();
 
-                //alert(dateSelected);
-                //trigger to update rule
-                eventChange();
-            }
-        }).datepicker('setDate', 'today');
         $('#end-date-hidden').val(MyDateString + 'T040000z');
 
         noRepeat();
@@ -408,14 +380,10 @@ $(document).ready(function() {
         e.preventDefault;
         return false;
     });
-
-
 });
 
 // Recurring Event Calculator: Show/Hide.  Grab all the radio buttons to see which one.
 $(document).on('change','input[name="event-recurring"]',function() {
-
-
     // Resets all the recurring options
     // resetOptions();
 
@@ -468,7 +436,7 @@ $(document).on('change', 'select[name="freq"]', function() {
         bysetpos: "",
         bymonthday: "",
         bymonth: "",
-        count: "1",
+      //  count: "1",
         until: ""
 
     };
@@ -722,7 +690,6 @@ $(document).on('change', 'select[name^="yearly-bymonth"]', function() {
 // Example Pattern
 // FREQ=YEARLY;INTERVAL=1;BYMONTH=1,3,4,10;COUNT=1
 $(document).on('click', '.yearly-multiple-months button', function() {
-    $(this).toggleClass('active');
     var bymonth = []; // Array to Store 'bymonth' in. Reset it to '' to store new days in below
 
     // Store Selected Days in the BYDAY rule
@@ -813,6 +780,27 @@ function noRepeat() {
     $('#rrule-readable').empty();
 }
 
+//trigger function when cliked no repeat
+function untilSelect() {
+  $(document).find('#end-date').datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      dateFormat: 'yy-mm-dd',
+      onSelect: function(value) {
+          //dateSelected = Date.parseExact(value, "yyyy-MM-dd");
+          dateSelected = new Date(value.replace(/-/g, "/") + ' 00:00:00'); // REGEX used to please SAFARI browser!
+          untilString = dateSelected.getFullYear() + ('0' + (dateSelected.getMonth() + 1)).slice(-2) + ('0' + dateSelected.getDate()).slice(-2);
+          $('#end-date-hidden').val(untilString + 'T040000z');
+          // Remove the count variable
+          recurringRule.count = '';
+          // Set until variable
+          recurringRule.until = untilString + 'T040000z';
+          //trigger to update rule
+          eventChange();
+      }
+  }).datepicker('setDate', 'today');
+}
+
 
 // Handle Until / Count Radio Buttons
 $(document).on('change','input[name="end-select"]',function() {
@@ -825,7 +813,6 @@ $(document).on('change','input[name="end-select"]',function() {
         if ($(this).val() == selectedRadio) {
             $('input[name="' + selectedRadio + '"]').removeAttr('disabled');
             if ($(this).val() == 'forever') {
-
                 // Remove the count variable
                 recurringRule.count = '';
                 // remove until variable
@@ -834,30 +821,12 @@ $(document).on('change','input[name="end-select"]',function() {
                 // Remove the count variable
                 recurringRule.count = '';
                 // reactive datepicker
-                $(document).find('#end-date').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    dateFormat: 'yy-mm-dd',
-                    onSelect: function(value) {
-                        //dateSelected = Date.parseExact(value, "yyyy-MM-dd");
-                        dateSelected = new Date(value.replace(/-/g, "/") + ' 00:00:00'); // REGEX used to please SAFARI browser!
-                        untilString = dateSelected.getFullYear() + ('0' + (dateSelected.getMonth() + 1)).slice(-2) + ('0' + dateSelected.getDate()).slice(-2);
-                        $('#end-date-hidden').val(untilString + 'T040000z');
-                        // Remove the count variable
-                        recurringRule.count = '';
-                        // Set until variable
-                        recurringRule.until = untilString + 'T040000z';
-
-                        //alert(dateSelected);
-                        //trigger to update rule
-                        eventChange();
-                    }
-                });
+                untilSelect();
                 //set until variable
                 recurringRule.until = $('#end-date-hidden').val();
+                eventChange();
             } else {
-                // count selected
-                // set count variable
+                // count selected & set count variable
                 recurringRule.count = '1';
             }
         } else {

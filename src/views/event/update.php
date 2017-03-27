@@ -20,7 +20,7 @@ use yii\helpers\Html;
   $script = <<< JS
 
   //process current RRULE
-  if($('input#event-recurrence').val() != '')
+  if($('input#event-recurrence').val() !== '')
   {
     readRule($('input#event-recurrence').val());
   }
@@ -49,7 +49,7 @@ use yii\helpers\Html;
       else
       {
         return false;
-        console.log(result);
+        // console.log(result);
       }
     }).fail(function(){
       console.log("server error");
