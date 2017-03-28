@@ -7,8 +7,8 @@ FormAssets::register($this);
 ?>
 
     <p><span style="font-weight:bold;">Recurring Event?
-          <input type="radio" name="event-recurring" value="no" checked="checked" />No
-          <input type="radio" name="event-recurring" value="yes" /> Yes
+          <label><input type="radio" name="event-recurring" value="no" checked="checked" />No</label>
+          <label><input type="radio" name="event-recurring" value="yes" /> Yes</label>
           <span id="rrule-readable"></span>
         <span>
     </p>

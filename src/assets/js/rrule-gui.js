@@ -389,27 +389,16 @@ $(document).on('change','input[name="event-recurring"]',function() {
     // enable the input next to the selected radio button
     if ($(this).val() == "yes") {
         $('#recurring-rules').slideDown();
-        //restore RRULE
-        if(typeof($rrule_bkk) == "undefined")
-        {
-          resetOptions();
-        }
-        else $('input#event-recurrence').val($rrule_bkk);
-
+        resetOptions();
         eventChange();
         // Show Until Rules
         $('#until-rules').show();
-
     } else {
-        //backup current RRULE
-        $rrule_bkk = $('input#event-recurrence').val();
         //disable the inputs not selected.
         $('#recurring-rules').hide();
         noRepeat();
     }
 });
-
-
 
 // FREQ Selection
 $(document).on('change', 'select[name="freq"]', function() {
