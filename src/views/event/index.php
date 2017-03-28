@@ -47,7 +47,10 @@ $script = <<< JS
   $('#calendar').fullCalendar('option',{
     //click to update current event
     eventClick: function(calEvent, jsEvent, view){
-      $.get(\$url+'calendar/event/update',{id:calEvent.id},function(\$data){
+      //send also date-range of the current view to update view when CRUD events
+      var \$dstart = $('#calendar').fullCalendar('getView').start.format(); //start date of current view
+      var \$dend = $('#calendar').fullCalendar('getView').end.format(); //end date of current view
+      $.get(\$url+'calendar/event/update',{dstart:\$dstart,dend:\$dend,id:calEvent.id},function(\$data){
         $('#modal').modal('show')
         .find('.modal-body')
         .html(\$data);

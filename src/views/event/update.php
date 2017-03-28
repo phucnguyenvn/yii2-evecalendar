@@ -25,7 +25,6 @@ use yii\helpers\Html;
     readRule($('input#event-recurrence').val());
   }
 
-
   $('form#event-form').on('beforeSubmit',function(e){
     var \$url = window.location.protocol + "//" + window.location.host + "/";
     var \$form = $(this);
@@ -38,8 +37,9 @@ use yii\helpers\Html;
       if(result.message == "success")
       {
         $('#modal').modal('hide');
+        //remove old Events in current view
+        $('#calendar').fullCalendar('removeEvents',result.id);
         //update current view after saved event
-        console.log(result);
         $.each(result.data,function(key,value){
           {
               $('#calendar').fullCalendar('renderEvent',value,false);

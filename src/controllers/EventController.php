@@ -98,12 +98,25 @@ class EventController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($dstart=null,$dend=null,$id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return;
+          Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+          $result = array();
+          $result['message'] = 'success';
+          $result['id'] = $id;
+          //process for recurring events
+          if($model->recurrence != '')
+          {
+            $models = Event::getRecurringEventbyDateRange($dstart,$dend,$model->id);
+            $result['data'] = CalendarHelper::convertCalendar($models);
+          }
+          //process for non-recurring events
+          else {
+            $result['data'] = CalendarHelper::convertCalendar($model);
+          }
+          return $result;
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

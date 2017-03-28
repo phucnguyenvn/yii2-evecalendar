@@ -14,7 +14,7 @@ function readRule(rrule) {
             }
             recur[temp[0]] = temp[1];
         }
-        console.log(recur);
+      //  console.log(recur);
 
         // See if the recurring rule has enough valid parts
         if (recur.FREQ && (recur.COUNT || recur.UNTIL || recur.INTERVAL)) {
@@ -268,7 +268,6 @@ function readRule(rrule) {
                         $('select[name="yearly-byday"]').val(recur.BYDAY);
                         $('select[name="yearly-bysetpos"]').val(recur.BYSETPOS);
                         $('select[name="yearly-bymonth-with-bysetpos-byday"]').val(recur.BYMONTH);
-
 
                         recurringRule.bymonth = recur.BYMONTH;
                         recurringRule.byday = recur.BYDAY;
