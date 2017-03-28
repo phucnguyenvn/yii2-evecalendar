@@ -551,13 +551,9 @@ $(document).on('change','input[name="monthday-pos-select"]',function() {
                     $('select[name^="month-byday"]').attr('disabled', 'disabled');
                     recurringRule.byday = "";
                     recurringRule.bysetpos = "";
-
-
                     break;
-
             }
         }
-
     });
 
     //trigger to update rule
@@ -616,8 +612,6 @@ $(document).on('change','input[name="yearly-options"]',function() {
 
                     // Enable the buttons
                     $('.yearly-multiple-months button').removeAttr('disabled');
-
-
                     break;
 
                 case "yearly-precise":
