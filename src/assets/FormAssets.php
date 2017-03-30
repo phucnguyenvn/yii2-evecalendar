@@ -11,11 +11,10 @@ class FormAssets extends AssetBundle
     public $js = [
         'js/nlp.js',
         'js/rrule-gui.js',
-        'js/rrule.js'
+        'js/rrule.js',
+        'js/loadingoverlay.min.js'
     ];
     public $depends = [
       'phucnguyenvn\yii2evecalendar\assets\ModuleAsset',
-      'yii\web\YiiAsset',
-      'yii\bootstrap\BootstrapAsset',
     ];
 }

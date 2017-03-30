@@ -26,7 +26,6 @@ use yii\helpers\Html;
   }
 
   $('form#event-form').on('beforeSubmit',function(e){
-    var \$url = window.location.protocol + "//" + window.location.host + "/";
     var \$form = $(this);
     $.post(
         \$form.attr("action"),
@@ -41,9 +40,7 @@ use yii\helpers\Html;
         $('#calendar').fullCalendar('removeEvents',result.id);
         //update current view after saved event
         $.each(result.data,function(key,value){
-          {
-              $('#calendar').fullCalendar('renderEvent',value,false);
-          }
+            $('#calendar').fullCalendar('renderEvent',value,false);
         });
       }
       else
@@ -55,6 +52,34 @@ use yii\helpers\Html;
       console.log("server error");
     });
     return false;
+  });
+
+
+  //process for delete event button
+  $('.delete-event').click(function(e) {
+      e.preventDefault();
+      var modal = $('#modal-delete').modal('show').css('top','30%');
+      $('#delete-confirm').click(function(e) {
+          e.preventDefault();
+          var \$url = window.location.protocol + "//" + window.location.host + "/";
+          $.post(\$url+'calendar/event/delete',{id:$model->id},function(){})
+          .done(function(result){
+            if(result.message == "success")
+            {
+              $('#modal-delete').modal('hide');
+              $('#modal').modal('hide');
+              //remove old Events in current view
+              $('#calendar').fullCalendar('removeEvents',result.id);
+            }
+            else
+            {
+              return false;
+              // console.log(result);
+            }
+          }).fail(function(){
+            console.log("server error");
+          });
+      });
   });
 JS;
 

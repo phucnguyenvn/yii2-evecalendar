@@ -22,8 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'size'=>'modal-md',
         ]);
       Modal::end();
-
      ?>
+     <?php Modal::begin([
+         'header' => '<h3 class="modal-title">Confirm Delete</h3>',
+         'id'     => 'modal-delete',
+         'size'   => 'modal-sm',
+         'footer' => '<button type="button" class="btn btn-default cancel-delete-modal">Cancel</button>
+                      <button type="button" class="btn btn-danger" id="delete-confirm">Delete</button>',
+     ]); ?>
+     <?= 'Do you want to delete this event?'; ?>
+     <?php Modal::end(); ?>
     <?= EventCalendar::widget([
             'events' => \yii\helpers\Url::to(['events']),
         ]);

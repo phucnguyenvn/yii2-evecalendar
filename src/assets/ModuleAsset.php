@@ -13,8 +13,8 @@ class ModuleAsset extends AssetBundle
         'js/main.js',
     ];
     public $depends = [
-      'edofre\fullcalendar\CoreAsset',
       'yii\web\YiiAsset',
       'yii\bootstrap\BootstrapAsset',
+      'edofre\fullcalendar\CoreAsset',
     ];
 }

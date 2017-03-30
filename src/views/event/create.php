@@ -19,9 +19,8 @@ use yii\widgets\ActiveForm;
 <?php
   //hanled ajax submit form
   $script = <<< JS
-
   $('form#event-form').on('beforeSubmit',function(e){
-    var \$url = window.location.protocol + "//" + window.location.host + "/";
+
     var \$form = $(this);
     $.post(
         \$form.attr("action"),
@@ -31,14 +30,14 @@ use yii\widgets\ActiveForm;
       //if new model saved
       if(result.message == "success")
       {
-        $('#modal').modal('hide');
         //update current view after saved event
-        console.log(result);
         $.each(result.data,function(key,value){
           {
               $('#calendar').fullCalendar('renderEvent',value,false);
+              console.log(value);
           }
         });
+        $('#modal').modal('hide');
       }
       else
       {

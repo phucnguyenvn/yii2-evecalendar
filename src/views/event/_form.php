@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $model phucnguyenvn\yii2evecalendar\models\Event */
 /* @var $form yii\widgets\ActiveForm */
@@ -65,16 +64,17 @@ use yii\widgets\ActiveForm;
 
     <?= $this->render('_recurrent') ?>
 
-    <?= $form->field($model, 'recurrence')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'recurrence')->textInput(['maxlength' => true,'type'=>'hidden'])->label(false); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::button('Cancel', ['class' => 'btn btn-default modal-cancel']) ?>
+        <?= Html::button('Cancel', ['class' => 'btn btn-default modal-cancel','data-dismiss'=>'modal']) ?>
+        <?= $model->isNewRecord ? '' : Html::button('Delete', ['class' => 'btn btn-danger pull-right delete-event']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
+
 <?php
   //hanled ajax submit form
   $script = <<< JS
@@ -115,6 +115,19 @@ use yii\widgets\ActiveForm;
   $(".modal-cancel").click(function(){
       $('#modal').modal('hide');
   });
+
+  $(".cancel-delete-modal").click(function(){
+      $('#modal-delete').modal('hide');
+  });
+
+  //ajax loading animation
+  $(document).ajaxStart(function(){
+    $.LoadingOverlay("show");
+  });
+  $(document).ajaxStop(function(){
+      $.LoadingOverlay("hide");
+  });
+
 JS;
 
 $this->registerJs($script);

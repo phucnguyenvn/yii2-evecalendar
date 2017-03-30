@@ -66,20 +66,12 @@ class EventController extends Controller
         $model = new Event();
         $model->s_date = $date; //date('m/d/Y', strtotime($date));
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //check if all-day event?
+            if($model->e_time==null) $model->s_time=null;
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $result = array();
             $result['message'] = 'success';
-            //process for recurring events
-            if($model->recurrence != '')
-            {
-              $models = Event::getRecurringEventbyDateRange($dstart,$dend,$model->id);
-              $result['data'] = CalendarHelper::convertCalendar($models);
-            }
-            //process for non-recurring events
-            else {
-              $result['data'] = CalendarHelper::convertCalendar($model);
-            }
-            return $result;
+            return $this->updateView($model,$dstart,$dend,$result);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -87,11 +79,6 @@ class EventController extends Controller
         }
     }
 
-    //update view when create success
-    public function actionSuccess($model=null){
-      //var_dump($model); die;
-      return;
-    }
     /**
      * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -102,21 +89,13 @@ class EventController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          //check if all-day event?
+          if($model->e_time==null) $model->s_time=null;
           Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
           $result = array();
           $result['message'] = 'success';
           $result['id'] = $id;
-          //process for recurring events
-          if($model->recurrence != '')
-          {
-            $models = Event::getRecurringEventbyDateRange($dstart,$dend,$model->id);
-            $result['data'] = CalendarHelper::convertCalendar($models);
-          }
-          //process for non-recurring events
-          else {
-            $result['data'] = CalendarHelper::convertCalendar($model);
-          }
-          return $result;
+          return $this->updateView($model,$dstart,$dend,$result);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
@@ -124,17 +103,37 @@ class EventController extends Controller
         }
     }
 
+
+    private function updateView($model,$dstart=null,$dend=null,$result)
+    {
+      //process for recurring events
+      if($model->recurrence != '')
+      {
+        $models = Event::getRecurringEventbyDateRange($dstart,$dend,$model->id);
+        $result['data'] = CalendarHelper::convertCalendar($models);
+      }
+      //process for non-recurring events
+      else {
+        $result['data'] = CalendarHelper::convertCalendar($model);
+      }
+      return $result;
+    }
     /**
      * Deletes an existing Event model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $result = array();
+        if(isset($_POST['id']) && $this->findModel($_POST['id'])->delete())
+        {
+            $result['message'] = 'success';
+            $result['id'] = $_POST['id'];
+        }
+        \Yii::$app->response->format = 'json';
+        return $result;
     }
 
     /**

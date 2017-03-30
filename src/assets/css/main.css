@@ -11,6 +11,10 @@
     box-shadow: 2px 2px 2px #000000;
 }
 
+.modal{
+  overflow: scroll;
+}
+
 #rrule-readable{
   color:green;
   font-weight: bold;
