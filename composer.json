@@ -14,7 +14,7 @@
 	}],
 	"minimum-stability": "stable",
 	"require": {
-		"edofre/yii2-fullcalendar": "V1.0.5",
+		"edofre/yii2-fullcalendar": "V1.0.4",
 		"simshaun/recurr": "~2.2",
 		"kartik-v/yii2-widget-timepicker": "~1.0.3"
 	},
