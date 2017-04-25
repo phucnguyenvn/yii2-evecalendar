@@ -31,7 +31,12 @@ use yii\widgets\ActiveForm;
       </div>
       <div class="col-sm-4">
         <?= $form->field($model, 's_time')->widget(\kartik\time\TimePicker::classname(), [
-
+          'pluginOptions' => [
+            'showMeridian'=>false
+          ],
+          'options' => [
+              'readonly' => true,
+           ],
         ]) ?>
       </div>
 
@@ -54,8 +59,12 @@ use yii\widgets\ActiveForm;
       <div class="col-sm-4">
         <?= $form->field($model, 'e_time')->widget(\kartik\time\TimePicker::classname(), [
             'pluginOptions' => [
-              'defaultTime' => false
-            ]
+              'defaultTime' => false,
+              'showMeridian'=>false
+            ],
+            'options' => [
+                'readonly' => true,
+             ],
         ]) ?>
       </div>
 
