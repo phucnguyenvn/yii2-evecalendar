@@ -129,13 +129,7 @@ use yii\widgets\ActiveForm;
       $('#modal-delete').modal('hide');
   });
 
-  //ajax loading animation
-  $(document).ajaxStart(function(){
-    $.LoadingOverlay("show");
-  });
-  $(document).ajaxStop(function(){
-      $.LoadingOverlay("hide");
-  });
+  
 
 JS;
 

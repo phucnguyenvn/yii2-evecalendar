@@ -70,6 +70,14 @@ $script = <<< JS
     },
 
   });
+
+  //ajax loading animation
+  $(document).ajaxStart(function(){
+    $.LoadingOverlay("show");
+  });
+  $(document).ajaxStop(function(){
+      $.LoadingOverlay("hide");
+  });
 JS;
 
 $this->registerJs($script);
