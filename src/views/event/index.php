@@ -8,7 +8,6 @@ use phucnguyenvn\yii2evecalendar\assets\ModuleAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-ModuleAsset::register($this);
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
