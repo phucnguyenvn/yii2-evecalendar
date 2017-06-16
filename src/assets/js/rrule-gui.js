@@ -762,6 +762,18 @@ function noRepeat() {
     $('#rrule-readable').empty();
 }
 
+//process date to fit pattern
+function dateProcess(value){
+  //dateSelected = Date.parseExact(value, "yyyy-MM-dd");
+  dateSelected = new Date(value.replace(/-/g, "/") + ' 00:00:00'); // REGEX used to please SAFARI browser!
+  untilString = dateSelected.getFullYear() + ('0' + (dateSelected.getMonth() + 1)).slice(-2) + ('0' + dateSelected.getDate()).slice(-2);
+  $('#end-date-hidden').val(untilString + 'T040000z');
+  // Remove the count variable
+  recurringRule.count = '';
+  // Set until variable
+  recurringRule.until = untilString + 'T040000z';
+}
+
 //trigger function when cliked no repeat
 function untilSelect() {
   $(document).find('#end-date').datepicker({
@@ -769,16 +781,9 @@ function untilSelect() {
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
       onSelect: function(value) {
-          //dateSelected = Date.parseExact(value, "yyyy-MM-dd");
-          dateSelected = new Date(value.replace(/-/g, "/") + ' 00:00:00'); // REGEX used to please SAFARI browser!
-          untilString = dateSelected.getFullYear() + ('0' + (dateSelected.getMonth() + 1)).slice(-2) + ('0' + dateSelected.getDate()).slice(-2);
-          $('#end-date-hidden').val(untilString + 'T040000z');
-          // Remove the count variable
-          recurringRule.count = '';
-          // Set until variable
-          recurringRule.until = untilString + 'T040000z';
-          //trigger to update rule
-          eventChange();
+        dateProcess(value);
+        //trigger to update rule
+        eventChange();
       }
   }).datepicker('setDate', 'today');
 }
@@ -804,8 +809,8 @@ $(document).on('change','input[name="end-select"]',function() {
                 recurringRule.count = '';
                 // reactive datepicker
                 untilSelect();
-                //set until variable
-                recurringRule.until = $('#end-date-hidden').val();
+                //auto set UTIL = today
+                dateProcess($('#end-date').val());
                 eventChange();
             } else {
                 // count selected & set count variable
