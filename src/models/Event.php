@@ -48,7 +48,7 @@ class Event extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['cat_id', 'user_id', 'status','entity_id'], 'integer'],
             [['s_time', 'e_time'], 'safe'],
-            [['s_date', 'e_date'], 'safe'],
+            [['s_date', 'e_date'], 'date', 'format'=>'yyyy-MM-dd'],
             [['title', 'notice_mail', 'recurrence'], 'string', 'max' => 255],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => CalCategory::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];

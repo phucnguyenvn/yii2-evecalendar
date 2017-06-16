@@ -19,6 +19,12 @@ use yii\helpers\Html;
   //hanled ajax submit form
   $script = <<< JS
 
+  //all day past will be block start-date input field
+  if(new Date($('#event-s_date').val()).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0))
+  {
+    $('#event-s_date').attr('disabled','disabled');
+  }
+
   //process current RRULE
   if($('input#event-recurrence').val() !== '')
   {

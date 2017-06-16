@@ -23,6 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;
       Modal::end();
      ?>
      <?php Modal::begin([
+         'header' => '<h3 class="modal-title">hihii</h3>',
+         'id'     => 'modal-notify',
+         'size'   => 'modal-sm',
+         'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
+     ]); ?>
+     <p class='modal-notify-body'><p>
+     <?php Modal::end(); ?>
+     <?php Modal::begin([
          'header' => '<h3 class="modal-title">Confirm Delete</h3>',
          'id'     => 'modal-delete',
          'size'   => 'modal-sm',

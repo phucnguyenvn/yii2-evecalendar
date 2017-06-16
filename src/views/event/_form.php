@@ -26,6 +26,7 @@ use yii\widgets\ActiveForm;
                 'dateFormat' => 'yyyy-MM-dd',
                 'options' => [
                       'class'=>'form-control',
+                      'readonly' => true
                    ]
             ])?>
       </div>
@@ -52,6 +53,7 @@ use yii\widgets\ActiveForm;
                   'dateFormat' => 'yyyy-MM-dd',
                   'options' => [
                         'class'=>'form-control',
+                        'readonly' => true
                      ]
               ])?>
       </div>
@@ -87,6 +89,18 @@ use yii\widgets\ActiveForm;
 <?php
   //hanled ajax submit form
   $script = <<< JS
+
+  //block chose day-past
+  $('#event-s_date,#event-e_date').on('input change',function(e){
+    if(new Date($(this).val()).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0))
+    {
+      var modalNotify = $('#modal-notify').modal('show').css('top','30%');
+      modalNotify.find('.modal-title').text('Warning');
+      modalNotify.find('.modal-notify-body').text('Not allow to set date in the past');
+      //set date to current date
+      $(this).datepicker("setDate", new Date());
+    }
+  });
 
   var s_time,e_time = null;
   //hide time field
@@ -129,7 +143,7 @@ use yii\widgets\ActiveForm;
       $('#modal-delete').modal('hide');
   });
 
-  
+
 
 JS;
 
