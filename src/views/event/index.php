@@ -44,7 +44,12 @@ $script = <<< JS
   function buttonAddEvent()
   {
       $('.btn-add-event').remove();
-      $('.fc-day-top').append("<div class='btn-add-event'></div>");
+      //btn add event month view
+      $('.fc-day-top').append("<div class='btn-add-event btn-add-event-month'></div>");
+      //btn add event week view
+      $('.fc-agendaWeek-view .fc-day-header').append("<div class='btn-add-event btn-add-event-week'></div>");
+      //btn add event day view
+      $('.fc-agendaDay-view .fc-day-header').append("<div class='btn-add-event btn-add-event-day'></div>");
   }
   $('button').click(function(){
     buttonAddEvent();

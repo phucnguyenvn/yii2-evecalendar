@@ -2,9 +2,20 @@
     background-image: url(../images/add-event.png) !important;
     background-size: 16px 16px !important;
     width: 16px !important;
-    margin: 4px;
     height: 16px !important;
     cursor: pointer;
+}
+
+.btn-add-event-month{
+  margin: 4px;
+}
+
+.btn-add-event-week{
+  margin: 4px auto;
+}
+
+.btn-add-event-day{
+  margin: 4px auto;
 }
 
 .btn-add-event:hover{
