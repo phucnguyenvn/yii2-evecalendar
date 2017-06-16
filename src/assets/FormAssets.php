@@ -13,7 +13,7 @@ class FormAssets extends AssetBundle
         'js/rrule-gui.js',
         'js/rrule.js'
     ];
-    public $depends = [
-      'phucnguyenvn\yii2evecalendar\assets\ModuleAsset',
-    ];
+    // public $depends = [
+    //   'phucnguyenvn\yii2evecalendar\assets\ModuleAsset',
+    // ];
 }

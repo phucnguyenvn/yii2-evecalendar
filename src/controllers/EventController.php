@@ -152,6 +152,7 @@ class EventController extends Controller
         }
     }
 
+    //This action return ajax events for main view
     public function actionEvents($start, $end)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
