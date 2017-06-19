@@ -65,9 +65,10 @@ class EventController extends Controller
     {
         $model = new Event();
         $model->s_date = $date; //date('m/d/Y', strtotime($date));
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //check if all-day event?
             if($model->e_time==null) $model->s_time=null;
+            $model->save();
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $result = array();
             $result['message'] = 'success';
@@ -88,9 +89,10 @@ class EventController extends Controller
     public function actionUpdate($dstart=null,$dend=null,$id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
           //check if all-day event?
           if($model->e_time==null) $model->s_time=null;
+          $model->save();
           Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
           $result = array();
           $result['message'] = 'success';
