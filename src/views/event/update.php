@@ -35,7 +35,7 @@ use yii\helpers\Html;
     var \$form = $(this);
     $.post(
         \$form.attr("action"),
-        \$form.serialize()
+        \$form.serialize()+"&submit=true"
     )
     .done(function(result){
       //if new model saved

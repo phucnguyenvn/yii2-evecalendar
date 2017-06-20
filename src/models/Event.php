@@ -48,12 +48,38 @@ class Event extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['cat_id', 'user_id', 'status','entity_id'], 'integer'],
             [['s_time', 'e_time'], 'safe'],
+            [['s_date','e_date'],'required'],
             [['s_date', 'e_date'], 'date', 'format'=>'yyyy-MM-dd'],
+            [['s_date','e_date'],'checkDateinthePast'], //block chose day-past
+            [['s_time', 'e_time','s_date', 'e_date'],'checkDate'],
             [['title', 'notice_mail', 'recurrence'], 'string', 'max' => 255],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => CalCategory::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];
     }
 
+
+    //block set date in the past - in case javascript doesn't work
+    public function checkDateinthePast($attribute,$param)
+    {
+      $today = date('Y-m-d');
+      if($this->$attribute < $today)
+      {
+        $this->addError($attribute,'Can not set date in the past');
+      }
+    }
+    //block set wrong datetime - in case javascript doesn't work
+    public function checkDate($attribute,$param)
+    {
+      //check if start_date > end_date
+      if(strtotime($this->s_date)>strtotime($this->e_date))
+      {
+        $this->addError($attribute,'Can not set endDate before startDate');
+      }
+      elseif(strtotime($this->s_date)==strtotime($this->e_date)&&strtotime($this->s_time)>strtotime($this->e_time))
+      {
+        $this->addError($attribute,'Wrong time set');
+      }
+    }
     //Return array of event between specific start and end time input
     //Main purpose only for calendar display
     public static function getEventbyDateRange($start,$end)

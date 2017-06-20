@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="event-form">
 
-    <?php $form = ActiveForm::begin(['id'=>'event-form']); ?>
+    <?php $form = ActiveForm::begin(['id'=>'event-form','enableAjaxValidation'=>true]); ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
@@ -90,17 +90,17 @@ use yii\widgets\ActiveForm;
   //hanled ajax submit form
   $script = <<< JS
 
-  //block chose day-past
-  $('#event-s_date,#event-e_date').on('input change',function(e){
-    if(new Date($(this).val()).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0))
-    {
-      var modalNotify = $('#modal-notify').modal('show').css('top','30%');
-      modalNotify.find('.modal-title').text('Warning');
-      modalNotify.find('.modal-notify-body').text('Not allow to set date in the past');
-      //set date to current date
-      $(this).datepicker("setDate", new Date());
-    }
-  });
+  // //block chose day-past
+  // $('#event-s_date,#event-e_date').on('input change',function(e){
+  //   if(new Date($(this).val()).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0))
+  //   {
+  //     var modalNotify = $('#modal-notify').modal('show').css('top','30%');
+  //     modalNotify.find('.modal-title').text('Warning');
+  //     modalNotify.find('.modal-notify-body').text('Not allow to set date in the past');
+  //     //set date to current date
+  //     $(this).datepicker("setDate", new Date());
+  //   }
+  // });
 
   var s_time,e_time = null;
   //hide time field

@@ -64,15 +64,22 @@ class EventController extends Controller
     public function actionCreate($date=null,$dstart=null,$dend=null)
     {
         $model = new Event();
-        $model->s_date = $date; //date('m/d/Y', strtotime($date));
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //check if all-day event?
-            if($model->e_time==null) $model->s_time=null;
-            $model->save();
+        $model->s_date = $date;
+        $model->e_date = $date;
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $result = array();
-            $result['message'] = 'success';
-            return $this->updateView($model,$dstart,$dend,$result);
+            if($model->validate() && isset($_POST['submit']))
+            {
+              //check if all-day event?
+              if($model->e_time==null) $model->s_time=null;
+              $model->save();
+              $result = array();
+              $result['message'] = 'success';
+              return $this->updateView($model,$dstart,$dend,$result);
+            }
+            else {
+              return \yii\widgets\ActiveForm::validate($model);
+            }
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -89,15 +96,21 @@ class EventController extends Controller
     public function actionUpdate($dstart=null,$dend=null,$id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-          //check if all-day event?
-          if($model->e_time==null) $model->s_time=null;
-          $model->save();
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
           Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-          $result = array();
-          $result['message'] = 'success';
-          $result['id'] = $id;
-          return $this->updateView($model,$dstart,$dend,$result);
+          if($model->validate() && isset($_POST['submit']))
+          {
+            //check if all-day event?
+            if($model->e_time==null) $model->s_time=null;
+            $model->save();
+            $result = array();
+            $result['message'] = 'success';
+            $result['id'] = $id;
+            return $this->updateView($model,$dstart,$dend,$result);
+          }
+          else {
+            return \yii\widgets\ActiveForm::validate($model);
+          }
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

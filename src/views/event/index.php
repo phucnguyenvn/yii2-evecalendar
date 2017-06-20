@@ -53,11 +53,21 @@ $script = <<< JS
   {
       $('.btn-add-event').remove();
       //btn add event month view
-      $('.fc-day-top').append("<div class='btn-add-event btn-add-event-month'></div>");
+      $('.fc-day-top.fc-future,.fc-day-top.fc-today').append("<div class='btn-add-event btn-add-event-month'></div>");
       //btn add event week view
-      $('.fc-agendaWeek-view .fc-day-header').append("<div class='btn-add-event btn-add-event-week'></div>");
+      $('.fc-agendaWeek-view .fc-day-header').each(function( key, value ) {
+            if(new Date($(this).attr('data-date')).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+            {
+              $(this).append("<div class='btn-add-event btn-add-event-week'></div>");
+            }
+      });
       //btn add event day view
-      $('.fc-agendaDay-view .fc-day-header').append("<div class='btn-add-event btn-add-event-day'></div>");
+      $('.fc-agendaDay-view .fc-day-header').each(function( key, value ) {
+        if(new Date($(this).attr('data-date')).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+        {
+            $(this).append("<div class='btn-add-event btn-add-event-day'></div>");
+        }
+      });
   }
   $('button').click(function(){
     buttonAddEvent();
@@ -80,7 +90,6 @@ $script = <<< JS
     eventAfterAllRender: function( view ){
       buttonAddEvent();
     },
-
   });
 
   //ajax loading animation
