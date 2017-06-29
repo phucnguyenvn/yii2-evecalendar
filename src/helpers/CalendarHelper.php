@@ -14,10 +14,12 @@ class CalendarHelper extends \yii\helpers\BaseArrayHelper
         $models = is_array($models)? $models : [$models];
         foreach($models as $model)
         {
+          $allDay = (is_null($model->s_time) || is_null($model->e_time));
+          $recurr = empty($model->recurrence);
           $event = new DisplayEvents([
                "id" =>$model->id,
                "title"=>$model->title,
-               "allDay"=>(is_null($model->s_time) || is_null($model->e_time)),
+               "allDay"=>$allDay,
                "start"=>$model->start,
                "end"=>$model->end,
               //  "url"=>null,
@@ -30,9 +32,9 @@ class CalendarHelper extends \yii\helpers\BaseArrayHelper
               //  "constraint"=>null,
               //  "source"=>null,
               //  "color"=>'red',
-                "backgroundColor"=>empty($model->recurrence)?'#ffff0b':'#03fbfa',
-                "borderColor"=>(is_null($model->s_time) || is_null($model->e_time))?'transparent':'#1ea421',
-                "textColor"=>(is_null($model->s_time) || is_null($model->e_time))?'#ff2e00':'#112981'
+                "backgroundColor"=>$allDay?'#f0da06':($recurr?'#2f5496':'transparent'),
+                "borderColor"=>$recurr?'transparent':'#4472c4',
+                "textColor"=>$allDay?'#595959':($recurr?'white':'#595959')
           ]);
           array_push($events,$event);
         }
