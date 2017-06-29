@@ -70,8 +70,6 @@ class EventController extends Controller
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             if($model->validate() && isset($_POST['submit']))
             {
-              //check if all-day event?
-              if($model->e_time==null) $model->s_time=null;
               $model->save();
               $result = array();
               $result['message'] = 'success';
@@ -100,8 +98,6 @@ class EventController extends Controller
           Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
           if($model->validate() && isset($_POST['submit']))
           {
-            //check if all-day event?
-            if($model->e_time==null) $model->s_time=null;
             $model->save();
             $result = array();
             $result['message'] = 'success';

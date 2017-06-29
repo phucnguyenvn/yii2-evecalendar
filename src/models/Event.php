@@ -47,7 +47,6 @@ class Event extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['description'], 'string'],
             [['cat_id', 'user_id', 'status','entity_id'], 'integer'],
-            [['s_time', 'e_time'], 'safe'],
             [['s_date','e_date'],'required'],
             [['s_date', 'e_date'], 'date', 'format'=>'yyyy-MM-dd'],
             [['s_date','e_date'],'checkDateinthePast'], //block chose day-past
@@ -75,7 +74,7 @@ class Event extends \yii\db\ActiveRecord
       {
         $this->addError($attribute,'Can not set endDate before startDate');
       }
-      elseif(strtotime($this->s_date)==strtotime($this->e_date)&&strtotime($this->s_time)>strtotime($this->e_time))
+      elseif(strtotime($this->s_date)==strtotime($this->e_date)&&strtotime($this->s_time)>strtotime($this->e_time)&&$this->e_time!=null)
       {
         $this->addError($attribute,'Wrong time set');
       }

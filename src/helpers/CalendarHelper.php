@@ -14,7 +14,7 @@ class CalendarHelper extends \yii\helpers\BaseArrayHelper
         $models = is_array($models)? $models : [$models];
         foreach($models as $model)
         {
-          $allDay = (is_null($model->s_time) || is_null($model->e_time));
+          $allDay = (empty($model->s_time) && empty($model->e_time));
           $recurr = empty($model->recurrence);
           $event = new DisplayEvents([
                "id" =>$model->id,

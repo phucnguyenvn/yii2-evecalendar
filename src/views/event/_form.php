@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
 
       <div class="col-sm-4 text-center">
         <div class="form-group field-all-day">
-          <label class="control-label" style="padding-top:30px;"><input type="checkbox" id="all-day" <?php if((!$model->isNewRecord&&is_null($model->s_time))||(!$model->isNewRecord&&is_null($model->e_time))) echo 'checked'; ?>><span style="padding-left:5px;">All day</span></label>
+          <label class="control-label" style="padding-top:30px;"><input type="checkbox" id="all-day" <?php if((!$model->isNewRecord&&empty($model->s_time))&&(!$model->isNewRecord&&empty($model->e_time))) echo 'checked'; ?>><span style="padding-left:5px;">All day</span></label>
         </div>
       </div>
     </div>
