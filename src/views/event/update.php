@@ -5,6 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model phucnguyenvn\yii2evecalendar\models\Event */
 
+Yii::$app->assetManager->bundles['yii\jui\JuiAsset'] = false; //prevent loading jquery-ui
 ?>
 <h3 class='text-center'><?php echo 'Update Event: ' . $model->title; ?></h3>
 <div class="event-update">

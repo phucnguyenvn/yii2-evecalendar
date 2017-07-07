@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model phucnguyenvn\yii2evecalendar\models\Event */
 
+Yii::$app->assetManager->bundles['yii\jui\JuiAsset'] = false; //prevent loading jquery-ui
 ?>
 <h3 class='text-center'>Create event:</h3>
 <div class="event-create">
