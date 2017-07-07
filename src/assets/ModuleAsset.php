@@ -11,7 +11,10 @@ class ModuleAsset extends AssetBundle
     ];
     public $js = [
         'js/main.js',
-        'js/loadingoverlay.min.js'
+        'js/loadingoverlay.min.js',
+        'js/nlp.js',
+        'js/rrule-gui.js',
+        'js/rrule.js'
     ];
     public $depends = [
       'yii\web\YiiAsset',

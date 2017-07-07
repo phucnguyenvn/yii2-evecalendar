@@ -2,8 +2,6 @@
 
 use phucnguyenvn\yii2evecalendar\assets\FormAssets;
 
-FormAssets::register($this);
-
 ?>
 
     <p><span style="font-weight:bold;">Recurring Event?
