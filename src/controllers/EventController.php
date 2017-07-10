@@ -37,10 +37,6 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        // $model = Event::getEventbyDateRange(date(DATE_W3C, strtotime('2016-11-10')),date(DATE_W3C, strtotime('2016-12-29')));
-        // //$result = CalendarHelper::convertCalendar($model);
-        // var_dump($model); die;
-
         return $this->render('index');
     }
 

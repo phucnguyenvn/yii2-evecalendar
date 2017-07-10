@@ -13,12 +13,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'cat_id')->textInput() ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'entity_id')->textInput() ?>
-
     <?= $form->field($model, 'notice_mail')->textInput(['maxlength' => true]) ?>
     <div class="row">
       <div class="col-sm-4">

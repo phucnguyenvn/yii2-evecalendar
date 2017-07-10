@@ -21,12 +21,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'lbnref') ?>
-
-    <?= $form->field($model, 'cat_id') ?>
-
-    <?php // echo $form->field($model, 'user_id') ?>
-
     <?php // echo $form->field($model, 'notice_mail') ?>
 
     <?php // echo $form->field($model, 's_date') ?>

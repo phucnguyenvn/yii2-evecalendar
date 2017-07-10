@@ -18,7 +18,7 @@ class EventSearch extends Event
     public function rules()
     {
         return [
-            [['id', 'cat_id', 'user_id', 'status','entity_id'], 'integer'],
+            [['id', 'status'], 'integer'],
             [['title', 'description', 'notice_mail', 's_date', 'e_date', 's_time', 'e_time', 'last_run', 'recurrence'], 'safe'],
         ];
     }
@@ -60,9 +60,6 @@ class EventSearch extends Event
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'cat_id' => $this->cat_id,
-            'user_id' => $this->user_id,
-            'entity_id' => $this->entity_id,
             's_date' => $this->s_date,
             'e_date' => $this->e_date,
             's_time' => $this->s_time,

@@ -14,9 +14,6 @@ use yii\validators\DateValidator;
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property integer $entity_id
- * @property integer $cat_id
- * @property integer $user_id
  * @property string $notice_mail
  * @property string $s_date
  * @property string $e_date
@@ -26,7 +23,6 @@ use yii\validators\DateValidator;
  * @property integer $status
  * @property string $recurrence
  *
- * @property CalCategory $cat
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -46,13 +42,12 @@ class Event extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['description'], 'string'],
-            [['cat_id', 'user_id', 'status','entity_id'], 'integer'],
+            [['status'], 'integer'],
             [['s_date','e_date'],'required'],
             [['s_date', 'e_date'], 'date', 'format'=>'yyyy-MM-dd'],
             [['s_date','e_date'],'checkDateinthePast'], //block chose day-past
             [['s_time', 'e_time','s_date', 'e_date'],'checkDate'],
             [['title', 'notice_mail', 'recurrence'], 'string', 'max' => 255],
-            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => CalCategory::className(), 'targetAttribute' => ['cat_id' => 'id']],
         ];
     }
 
@@ -136,9 +131,6 @@ class Event extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'entity_id' => 'Entity',
-            'cat_id' => 'Cat ID',
-            'user_id' => 'User ID',
             'notice_mail' => 'Notice Mail',
             's_date' => 'Start Date',
             'e_date' => 'End Date',
@@ -148,14 +140,6 @@ class Event extends \yii\db\ActiveRecord
             'status' => 'Status',
             'recurrence' => 'Recurrence',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCat()
-    {
-        return $this->hasOne(CalCategory::className(), ['id' => 'cat_id']);
     }
 
     //return start datetime ISO8601 string combine by start date and start time
